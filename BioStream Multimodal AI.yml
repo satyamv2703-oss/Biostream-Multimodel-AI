@@ -1,0 +1,201 @@
+app:
+  description: An autonomous multimodal AI agent engineered to parse, analyze, and
+    extract clinical insights from complex biological imagery and medical reports
+    instantly.
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: BioStream Multimodal AI
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/groq:0.0.19@17734754952001d7c9aa0b733bff44a28e03311d1ce011a9888a7604a922cf36
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      - document
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        knowledge_file_size_limit: 15
+        single_chunk_attachment_limit: 10
+        skill_file_size_limit: 50
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1791786711880-llm
+      source: '1791786711880'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: User Input
+        type: start
+        variables: []
+      height: 72
+      id: '1791786711880'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: openai/gpt-oss-120b
+          provider: langgenius/groq/groq
+        prompt_template:
+        - id: 7e6c56ff-2284-42b6-871d-94426ac009bd
+          role: system
+          text: "You are BioStream AI, an advanced autonomous Data Parsing & BioTech\
+            \ Synthesis Agent. Your role is to examine text-based cell culture data\
+            \ streams, metric logs, and unformatted laboratory statistics.\n\n###\
+            \ OPERATIONAL DIRECTIVES:\n1. Focus exclusively on the text characters\
+            \ provided in the user's message. Disregard any attached image placeholder\
+            \ tokens or files since you operate as a high-fidelity data string parser.\n\
+            \n2. Parse the text and isolate three critical research variables:\n \
+            \  - Cell Confluence (e.g., cell_conf, 0.78, or 78%)\n   - Active Mitosis/Division\
+            \ Count (e.g., active_mitosis_count, 14, or 14 nodes)\n   - Morphology\
+            \ Status (e.g., stable, normal)\n\n3. If these specific metrics are missing\
+            \ from the user's text message, do not output an ingestion error. Instead,\
+            \ politely reply: \n   \"Welcome to BioStream AI! Please paste your raw\
+            \ data stream parameters (e.g., cell_conf: 0.78, active_mitosis_count:\
+            \ 14, morphology_status: stable) alongside your upload so I can compile\
+            \ your report.\"\n\n4. Once the parameters are present in the text, immediately\
+            \ compile the data into this clean Markdown layout:\n\n## \U0001F52C Clinical\
+            \ BioTech Report Summary\n* **Isolated Research Parameters:** [Detail\
+            \ the specific parameters, cells, or items found]\n* **Identified Metrics\
+            \ / Numerical Values:** [List all extracted numbers, rates, and values\
+            \ clearly]\n* **Automated Preliminary Analytical Assessment:** [Provide\
+            \ a logical overview of what this data means for cell viability and health\
+            \ trends]\n"
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 101
+      id: answer
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    viewport:
+      x: -1.6685060190388867
+      y: -117.27981818919443
+      zoom: 1.1155550751270134
+  rag_pipeline_variables: []
